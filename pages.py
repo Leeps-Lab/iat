@@ -13,6 +13,7 @@ from django.conf import settings
 from ._builtin import Page
 from .models import STIMULI, STIMULI_LABELS, BLOCKS, Constants, Trial
 
+total_time = 0
 
 class Intro(Page):
     def is_displayed(self):
@@ -34,7 +35,9 @@ class IATPage(Page):
     """
     Page for running IAT trials for a single block (round).
     """
-
+    # total_time = 0
+    # tt = total_time
+    
     def vars_for_template(self):
         block_def = BLOCKS[self.round_number - 1]
         block_def['notice'] = block_def.get('notice', '')
@@ -61,7 +64,7 @@ class IATPage(Page):
             'stimulus_level_sides': stimulus_level_sides,
             'trials': Trial.objects.filter(player=self.player, block=self.round_number).order_by('trial')
         }
-
+    # time_this_round = 0
     def before_next_page(self):
         """
         Handle submitted trial responses.
@@ -72,6 +75,7 @@ class IATPage(Page):
         trial_ids = self.form.data['trial_ids'].split(',')
         responses = self.form.data['responses'].split(',')
         response_times = self.form.data['response_times'].split(',')
+        # total_time = self.form.data['total_time'].split(',')
         responses_correct = self.form.data['responses_correct'].split(',')
 
         if not trial_ids:
@@ -94,7 +98,10 @@ class IATPage(Page):
 
         print('number of trials submitted from player %d: %d' % (self.player.pk, len(trial_ids)))
 
+        print(response_times)
         # iterate through the aligned responses
+        # time_this_round_ = time_this_round
+        global total_time
         for trial_id, resp_key, resp_time_ms, resp_correct in zip(trial_ids, responses, response_times, responses_correct):
             # convert strings to integers
             trial_id = int(trial_id)
@@ -108,6 +115,8 @@ class IATPage(Page):
             trial.response_key = resp_key
             trial.response_time_ms = resp_time_ms
             trial.response_correct = resp_correct
+            # time_this_round += trial.response_time_ms
+            total_time += trial.response_time_ms
 
             print('> saving trial %d in block %d (trial ID %d): key %s, time %d, correct %d'
                   % (trial.trial, trial.block, trial.pk, trial.response_key, trial.response_time_ms,
@@ -117,8 +126,16 @@ class IATPage(Page):
 
 
 class Outro(Page):
+    def vars_for_template(self):
+        print(total_time)
+        return {
+            'total_time': total_time
+        }
+    
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
+    
+    
 
 
 page_sequence = [

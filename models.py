@@ -68,69 +68,69 @@ BLOCKS = [
         'right': [('concepts', 'Science')],
         'is_practice': True
     },
-    {   # 2
-        'label': 'Practice 2',
-        'n': 14,
-        'left': [('attributes', 'Female')],
-        'right': [('attributes', 'Male')],
-        'is_practice': True
-    },
-    {   # 3
-        'label': 'Test 1',
-        'n': 28,
-        'left': [
-            ('attributes', 'Female'),
-            ('concepts', 'Liberal Arts'),
-        ],
-        'right': [
-            ('attributes', 'Male'),
-            ('concepts', 'Science'),
-        ]
-    },
-    {   # 4: same as 3
-        'label': 'Test 2',
-        'n': 28,
-        'left': [
-            ('attributes', 'Female'),
-            ('concepts', 'Liberal Arts'),
-        ],
-        'right': [
-            ('attributes', 'Male'),
-            ('concepts', 'Science'),
-        ]
-    },
-    {   # 5
-        'label': 'Practice 3 (reversed)',
-        'n': 14,
-        'left': [('concepts', 'Science')],
-        'right': [('concepts', 'Liberal Arts')],
-        'is_practice': True,
-        'notice': 'WATCH OUT, the categories switch sides!',
-    },
-    {  # 6
-        'label': 'Test 3',
-        'n': 28,
-        'left': [
-            ('attributes', 'Female'),
-            ('concepts', 'Science'),
-        ],
-        'right': [
-            ('attributes', 'Male'),
-            ('concepts', 'Liberal Arts'),
-        ]
-    },
-    {  # 7: same as 6
-        'label': 'Test 4',
-        'n': 28,
-        'left': [
-            ('attributes', 'Female'),
-            ('concepts', 'Science'),
-        ],
-        'right': [
-            ('attributes', 'Male'),
-            ('concepts', 'Liberal Arts'),
-        ]
-    },
+    # {   # 2
+    #     'label': 'Practice 2',
+    #     'n': 14,
+    #     'left': [('attributes', 'Female')],
+    #     'right': [('attributes', 'Male')],
+    #     'is_practice': True
+    # },
+    # {   # 3
+    #     'label': 'Test 1',
+    #     'n': 28,
+    #     'left': [
+    #         ('attributes', 'Female'),
+    #         ('concepts', 'Liberal Arts'),
+    #     ],
+    #     'right': [
+    #         ('attributes', 'Male'),
+    #         ('concepts', 'Science'),
+    #     ]
+    # },
+    # {   # 4: same as 3
+    #     'label': 'Test 2',
+    #     'n': 28,
+    #     'left': [
+    #         ('attributes', 'Female'),
+    #         ('concepts', 'Liberal Arts'),
+    #     ],
+    #     'right': [
+    #         ('attributes', 'Male'),
+    #         ('concepts', 'Science'),
+    #     ]
+    # },
+    # {   # 5
+    #     'label': 'Practice 3 (reversed)',
+    #     'n': 14,
+    #     'left': [('concepts', 'Science')],
+    #     'right': [('concepts', 'Liberal Arts')],
+    #     'is_practice': True,
+    #     'notice': 'WATCH OUT, the categories switch sides!',
+    # },
+    # {  # 6
+    #     'label': 'Test 3',
+    #     'n': 28,
+    #     'left': [
+    #         ('attributes', 'Female'),
+    #         ('concepts', 'Science'),
+    #     ],
+    #     'right': [
+    #         ('attributes', 'Male'),
+    #         ('concepts', 'Liberal Arts'),
+    #     ]
+    # },
+    # {  # 7: same as 6
+    #     'label': 'Test 4',
+    #     'n': 28,
+    #     'left': [
+    #         ('attributes', 'Female'),
+    #         ('concepts', 'Science'),
+    #     ],
+    #     'right': [
+    #         ('attributes', 'Male'),
+    #         ('concepts', 'Liberal Arts'),
+    #     ]
+    # },
 ]
 
 
@@ -210,6 +210,7 @@ class Trial(Model):
     response_key = models.StringField()       # response: key that was pressed by participant
     response_correct = models.BooleanField()  # records whether response was correct
     response_time_ms = models.IntegerField()  # time it took until key was pressed since word/name was shown
+    total_time_ms = models.IntegerField()  # total_time
 
     player = ForeignKey(Player, on_delete=models.CASCADE)  # make a 1:n relationship between Player and Trial
 
@@ -235,7 +236,7 @@ except ImportError:
         Export all IAT trials together with the standard fields `session` and `participant_code`
         """
         fields_to_export = ['block', 'trial', 'stimulus', 'stimulus_class', 'stimulus_level',
-                            'response_key', 'response_correct', 'response_time_ms']
+                            'response_key', 'response_correct', 'response_time_ms', 'total_time']
         yield ['session', 'participant_code'] + fields_to_export
         for trial in Trial.objects.all():
             yield [trial.player.session.code, trial.player.participant.code] \
