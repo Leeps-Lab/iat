@@ -41,11 +41,26 @@ Modifications - Tanmay Mittal tmittal1@ucsc.edu
 STIMULI = {
     'attributes': {
         'Male': ['Man', 'Son', 'Father', 'Boy', 'Uncle', 'Grandpa', 'Husband'],
-        'Female': ['Mother', 'Wife', 'Aunt', 'Woman', 'Girl', 'Grandma', 'Daughter']
+        'MALE': ['MAN', 'HE', 'MEN', 'HIM', 'BOY', 'HIS', 'GENT'],
+        'Female': ['Mother', 'Wife', 'Aunt', 'Woman', 'Girl', 'Grandma', 'Daughter'],
+        'FEMALE': ['WOMAN', 'SHE', 'WOMEN', 'HER', 'GIRL', 'HERS', 'LADY']
     },
     'concepts': {
         'Science': ['Astronomy', 'Math', 'Chemistry', 'Physics', 'Biology', 'Geology', 'Engineering'],
-        'Liberal Arts': ['History', 'Arts', 'Humanities', 'English', 'Philosophy', 'Music', 'Literature']
+        'Liberal Arts': ['History', 'Arts', 'Humanities', 'English', 'Philosophy', 'Music', 'Literature'],
+        'Family' : ['garden','kitchen','marriage','laundry','home','children','relatives'],
+        'Career' : ['office', 'manager', 'salary', 'job','briefcase','profession','employees']
+    }
+}
+
+STIMULI_CAREER = {
+    'attributes': {
+        'MALE': ['MAN', 'HE', 'MEN', 'HIM', 'BOY', 'HIS', 'GENT'],
+        'FEMALE': ['WOMAN', 'SHE', 'WOMEN', 'HER', 'GIRL', 'HERS', 'LADY']
+    },
+    'concepts': {
+        'Family' : ['garden','kitchen','marriage','laundry','home','children','relatives'],
+        'Career' : ['office', 'manager', 'salary', 'job','briefcase','profession','employees']
     }
 }
 
@@ -54,6 +69,17 @@ STIMULI_LABELS = {
     ('attributes', 'Female'): 'Female',
     ('concepts', 'Science'): 'Science',
     ('concepts', 'Liberal Arts'): 'Liberal Arts',
+    ('attributes', 'MALE'): 'MALE',
+    ('attributes', 'FEMALE'): 'FEMALE',
+    ('concepts', 'Family'): 'Family',
+    ('concepts', 'Career'): 'Career',
+}
+
+STIMULI_LABELS_CAREER = {
+    ('attributes', 'MALE'): 'MALE',
+    ('attributes', 'FEMALE'): 'FEMALE',
+    ('concepts', 'Family'): 'Family',
+    ('concepts', 'Career'): 'Career',
 }
 
 #
@@ -131,6 +157,151 @@ BLOCKS = [
     #         ('concepts', 'Liberal Arts'),
     #     ]
     # },
+            # Gender Career 
+    {   # 1
+        'label': 'Practice 1',
+        'n': 14,      # this must match the number of stimuli per side
+        'left': [('concepts', 'Family')],
+        'right': [('concepts', 'Career')],
+        'is_practice': True
+    },
+    {   # 2
+        'label': 'Practice 2',
+        'n': 14,
+        'left': [('attributes', 'Female')],
+        'right': [('attributes', 'MALE')],
+        'is_practice': True
+    },
+    {   # 3
+        'label': 'Test 1',
+        'n': 28,
+        'left': [
+            ('attributes', 'FEMALE'),
+            ('concepts', 'Family'),
+        ],
+        'right': [
+            ('attributes', 'MALE'),
+            ('concepts', 'Career'),
+        ]
+    },
+    {   # 4: same as 3
+        'label': 'Test 2',
+        'n': 28,
+        'left': [
+            ('attributes', 'Female'),
+            ('concepts', 'Family'),
+        ],
+        'right': [
+            ('attributes', 'MALE'),
+            ('concepts', 'Career'),
+        ]
+    },
+    {   # 5
+        'label': 'Practice 3 (reversed)',
+        'n': 14,
+        'left': [('concepts', 'Career')],
+        'right': [('concepts', 'Family')],
+        'is_practice': True,
+        'notice': 'WATCH OUT, the categories switch sides!',
+    },
+    {  # 6
+        'label': 'Test 3',
+        'n': 28,
+        'left': [
+            ('attributes', 'FEMALE'),
+            ('concepts', 'Career'),
+        ],
+        'right': [
+            ('attributes', 'MALE'),
+            ('concepts', 'Family'),
+        ]
+    },
+    {  # 7: same as 6
+        'label': 'Test 4',
+        'n': 28,
+        'left': [
+            ('attributes', 'FEMALE'),
+            ('concepts', 'Career'),
+        ],
+        'right': [
+            ('attributes', 'MALE'),
+            ('concepts', 'Family'),
+        ]
+    },
+]
+
+BLOCKS_CAREER = [
+        # Gender Career 
+    {   # 1
+        'label': 'Practice 1',
+        'n': 14,      # this must match the number of stimuli per side
+        'left': [('concepts', 'Family')],
+        'right': [('concepts', 'Career')],
+        'is_practice': True
+    },
+    {   # 2
+        'label': 'Practice 2',
+        'n': 14,
+        'left': [('attributes', 'Female')],
+        'right': [('attributes', 'MALE')],
+        'is_practice': True
+    },
+    {   # 3
+        'label': 'Test 1',
+        'n': 28,
+        'left': [
+            ('attributes', 'FEMALE'),
+            ('concepts', 'Family'),
+        ],
+        'right': [
+            ('attributes', 'MALE'),
+            ('concepts', 'Career'),
+        ]
+    },
+    {   # 4: same as 3
+        'label': 'Test 2',
+        'n': 28,
+        'left': [
+            ('attributes', 'Female'),
+            ('concepts', 'Family'),
+        ],
+        'right': [
+            ('attributes', 'MALE'),
+            ('concepts', 'Career'),
+        ]
+    },
+    {   # 5
+        'label': 'Practice 3 (reversed)',
+        'n': 14,
+        'left': [('concepts', 'Career')],
+        'right': [('concepts', 'Family')],
+        'is_practice': True,
+        'notice': 'WATCH OUT, the categories switch sides!',
+    },
+    {  # 6
+        'label': 'Test 3',
+        'n': 28,
+        'left': [
+            ('attributes', 'FEMALE'),
+            ('concepts', 'Career'),
+        ],
+        'right': [
+            ('attributes', 'MALE'),
+            ('concepts', 'Family'),
+        ]
+    },
+    {  # 7: same as 6
+        'label': 'Test 4',
+        'n': 28,
+        'left': [
+            ('attributes', 'FEMALE'),
+            ('concepts', 'Career'),
+        ],
+        'right': [
+            ('attributes', 'MALE'),
+            ('concepts', 'Family'),
+        ]
+    },
 ]
 
 
